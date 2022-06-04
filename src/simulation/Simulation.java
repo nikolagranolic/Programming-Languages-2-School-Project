@@ -170,9 +170,9 @@ public class Simulation {
 	            }
 	        }
 		}
-		for (int k = 0; k < PATH.size(); k++) {
-            System.out.println(PATH.get(k));
-        }
+//		for (int k = 0; k < PATH.size(); k++) {
+//            System.out.println(PATH.get(k));
+//        }
 	}
 	// validacija argumenata komandne linije
 	private static void validation(String args[]) throws InvalidArgumentsException, InvalidDimensionException, InvalidNumberOfPlayersException {
