@@ -9,6 +9,7 @@ import gui.MainFrame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,10 +26,13 @@ public class Simulation {
 	public static ArrayList<Integer> PATH = new ArrayList<>();
 	public static boolean gamePaused = false;
 	public static CardDeck DECK = new CardDeck();
+	public static long timeReference;
 	
 	public static void main(String args[]) {
 		// validacija unosa argumenata komandne linije
 		try {
+			timeReference = new Date().getTime();
+			
 			validation(args);
 			numOfPlayers = Integer.parseInt(args[0]);
 			mapDimension = Integer.parseInt(args[1]);
@@ -36,7 +40,6 @@ public class Simulation {
 			createMatrix();
 			createPath();
 			createPlayers();
-			// pocetni ekran
 			
 			
 			
@@ -45,44 +48,54 @@ public class Simulation {
 			
 			MainFrame frame = new MainFrame();
 			frame.setVisible(true);
-			
 			frame.initializeStaticLabels();
-
 			
+			Thread matrixThread = new Thread(frame.getMatrixPanel());
+			matrixThread.setDaemon(true);
+			matrixThread.start();
 			
+			Thread cardThread = new Thread(frame.getCurrentCardLabel());
+			cardThread.setDaemon(true);
+			cardThread.start();
 			
-			
+			Thread gameDurationThread = new Thread(frame.getGameDurationLabel());
+			gameDurationThread.setDaemon(true);
+			gameDurationThread.start();
 			
 			GhostFigure ghostFigure = new GhostFigure();
 			Thread ghostFigureThread = new Thread(ghostFigure);
 			ghostFigureThread.setDaemon(true);
 			ghostFigureThread.start();
 			
-			Scanner scan = new Scanner(System.in);
-	        String option = "";
-	        while (!"END".equals(option)) {
-	            option = scan.nextLine();
-	            if ("PAUZA".equals(option)) {
-	                ghostFigure.paused = true;
-	            }
-	            if ("NASTAVAK".equals(option)) {
-	                ghostFigure.paused = false;
-	                try {
-	                    synchronized (ghostFigure) {
-	                        ghostFigure.notify();
-	                    }
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	        scan.close();
-//			try {
-//				Thread.sleep(26000);
-//			}
-//			catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			while(isGameActive()) {
+				for(Player player : PLAYERS)
+					player.playAMove();
+			}
+			System.out.println("KRAJ IGREEEEE");
+			
+			
+			
+			
+			
+//			Scanner scan = new Scanner(System.in);
+//	        String option = "";
+//	        while (!"END".equals(option)) {
+//	            option = scan.nextLine();
+//	            if ("PAUZA".equals(option)) {
+//	                ghostFigure.paused = true;
+//	            }
+//	            if ("NASTAVAK".equals(option)) {
+//	                ghostFigure.paused = false;
+//	                try {
+//	                    synchronized (ghostFigure) {
+//	                        ghostFigure.notify();
+//	                    }
+//	                } catch (Exception e) {
+//	                    e.printStackTrace();
+//	                }
+//	            }
+//	        }
+//	        scan.close();
 		}
 		catch(InvalidArgumentsException | InvalidNumberOfPlayersException | InvalidDimensionException e) {
 			System.out.println("Simulacija ne moze biti pokrenuta! Opis greske:");
@@ -170,16 +183,14 @@ public class Simulation {
 	            }
 	        }
 		}
-//		for (int k = 0; k < PATH.size(); k++) {
-//            System.out.println(PATH.get(k));
-//        }
+		
 	}
 	// validacija argumenata komandne linije
 	private static void validation(String args[]) throws InvalidArgumentsException, InvalidDimensionException, InvalidNumberOfPlayersException {
 		if(args.length != 2) {
 			throw new InvalidArgumentsException();
 		}
-		if(Integer.parseInt(args[0]) < MIN_NUM_OF_PLAYERS || Integer.parseInt(args[0]) > MAX_NUM_OF_PLAYERS) {
+		if(Integer.parseInt(args[0]) < MIN_NUM_OF_PLAYERS || Integer.parseInt(args[0]) > MAX_NUM_OF_PLAYERS) { // OBRISATI -1
 			throw new InvalidNumberOfPlayersException();
 		}
 		if(Integer.parseInt(args[1]) < MIN_MAP_DIM || Integer.parseInt(args[1]) > MAX_MAP_DIM) {
@@ -196,6 +207,15 @@ public class Simulation {
 		List<Player> playerList = Arrays.asList(PLAYERS);
 		Collections.shuffle(playerList);
 		playerList.toArray(PLAYERS);
+	}
+	
+	// provjeravanje da li je igra i dalje traje
+	public static boolean isGameActive() {
+		for(Player player : PLAYERS) {
+			if(player.getFiguresRemaining() != 0)
+				return true;
+		}
+		return false;
 	}
 	// kreiranje matrice (popunjavanje matrice string reprezentacijama brojeva)
 	public static void createMatrix() {

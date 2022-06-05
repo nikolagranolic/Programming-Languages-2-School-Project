@@ -5,11 +5,14 @@ import interfaces.ImmuneToHolesInterface;
 import enums.Color;
 
 public class FlyingFigure extends PlayableFigure implements ImmuneToHolesInterface, FlyingInterface {
-	boolean isAboveHole;
 	
-	public FlyingFigure(Color color) {
-		super(color);
+	public FlyingFigure(String owner, Color color) {
+		super(owner, color);
 		this.movementQuotient = 1;
-		this.isAboveHole = false;
+	}
+	
+	@Override
+	public String toString() {
+		return "FF";
 	}
 }

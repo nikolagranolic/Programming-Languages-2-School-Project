@@ -1,35 +1,28 @@
 package util;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
 public class CardDeck {
 	private ArrayList<Card> cards = new ArrayList<>();
 	
 	public CardDeck() {
-		Card[] cardPool = new Card[6];
-		cardPool[0] = new SpecialCard("src/Images/specialcard.png");
-		for(int i = 1; i <= 5; i++) {
-			cardPool[i] = new BasicCard("src/Images/basicimage" + i + ".png", i);
+		for(int i = 0; i < 40; i++) {
+			cards.add(new BasicCard(i / 10 + 1));
 		}
-		int specialCardsRemaining = 5, index;
-		Random rand = new Random();
-		for(int i = 0; i < 52; i++) {
-			index = rand.nextInt(6);
-			if(index == 0 && specialCardsRemaining > 0) {
-				cards.add(cardPool[index]);
-				specialCardsRemaining--;
-			}
-			else {
-				if(index == 0)
-					index = rand.nextInt(5) + 1;
-				cards.add(cardPool[index]);
-			}
-		}
+//		for(int i = 0; i < 12; i++) {
+//			cards.add(new SpecialCard());
+//		}
+		Collections.shuffle(cards);
 	}
 	
-	public Card drawCard() {
-		Random rand = new Random();
-		return cards.get(rand.nextInt(53));
+	public void drawCard() {
+		Card temp = cards.remove(0);
+		cards.add(temp);
+	}
+	
+	
+	public Card peek() {
+		return cards.get(0);
 	}
 }

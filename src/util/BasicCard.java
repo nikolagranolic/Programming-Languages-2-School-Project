@@ -3,8 +3,7 @@ package util;
 public class BasicCard extends Card {
 	int number;
 	
-	public BasicCard(String src, int n) {
-		super(src);
+	public BasicCard(int n) {
 		this.number = n;
 	}
 	

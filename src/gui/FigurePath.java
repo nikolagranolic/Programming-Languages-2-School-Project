@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -12,7 +11,6 @@ import simulation.Simulation;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.awt.Dialog.ModalityType;
 import java.awt.Toolkit;
 
 public class FigurePath extends JDialog {
@@ -20,25 +18,13 @@ public class FigurePath extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static ArrayList<JLabel> matrix = new ArrayList<>();
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					FigurePath dialog = new FigurePath("Test", null);
-//					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//					dialog.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public ArrayList<JLabel> matrix = new ArrayList<>();
 
 	/**
 	 * Create the dialog.
 	 */
 	public FigurePath(String figureName, ArrayList<Integer> path) {
+		getContentPane().setBackground(Color.PINK);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FigurePath.class.getResource("/Images/pieceicon.png")));
 		setModal(true);
 		setResizable(false);
@@ -46,7 +32,8 @@ public class FigurePath extends JDialog {
 		getContentPane().setLayout(new GridLayout(Simulation.mapDimension, Simulation.mapDimension, 0, 0));
 		for(int i = 0; i < Simulation.mapDimension * Simulation.mapDimension; i++) { // dodavanje
 			JLabel temp = new JLabel("" + (i + 1));
-			temp.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			temp.setBorder(new LineBorder(Color.LIGHT_GRAY));
+			temp.setBackground(Color.PINK);
 			temp.setHorizontalAlignment(SwingConstants.CENTER);
 			temp.setForeground(Color.LIGHT_GRAY);
 			getContentPane().add(temp);
@@ -56,7 +43,7 @@ public class FigurePath extends JDialog {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		for(int i = 0; i < matrix.size(); i++) {
-			if(path.contains(i)) {
+			if(path.contains(i + 1)) {
 				matrix.get(i).setText("O");
 				matrix.get(i).setForeground(Color.BLACK);
 			}
