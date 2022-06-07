@@ -133,6 +133,8 @@ public abstract class PlayableFigure extends Figure {
 		return temp;
 	}
 	
+	public abstract String getType();
+	
 	public long getTimeSpentMoving() {
 		return timeSpentMoving;
 	}
@@ -153,6 +155,10 @@ public abstract class PlayableFigure extends Figure {
 		return positionOnPath;
 	}
 	
+	public boolean isReachedFinish() {
+		return reachedFinish;
+	}
+	
 	public int getPathLength() {
 		return pathLength;
 	}
@@ -167,6 +173,18 @@ public abstract class PlayableFigure extends Figure {
 		else if(this.getFigureColor() == enums.Color.RED)
 			return java.awt.Color.RED;
 		return null;
+	}
+	
+	public String getColorString() {
+		if(this.getFigureColor() == enums.Color.BLUE)
+			return "BLUE";
+		else if(this.getFigureColor() == enums.Color.GREEN)
+			return "GREEN";
+		else if(this.getFigureColor() == enums.Color.YELLOW)
+			return "YELLOW";
+		else if(this.getFigureColor() == enums.Color.RED)
+			return "RED";
+		return "";
 	}
 
 	public boolean isLost() {

@@ -82,6 +82,8 @@ public class Player {
 					activeFigureIndex++;
 					figuresRemaining--;
 				}
+				if(activeFigureIndex == 4)
+					return;
 				boolean reachedEnd = figures.get(activeFigureIndex).move(((BasicCard)drawnCard).getNumber());
 				if(reachedEnd) {
 					activeFigureIndex++;

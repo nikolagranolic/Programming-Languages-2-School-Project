@@ -13,4 +13,8 @@ public class SuperFastFigure extends PlayableFigure implements SuperFastInterfac
 	public String toString() {
 		return "SFF";
 	}
+	
+	public String getType() {
+		return "SuperFastFigure";
+	}
 }

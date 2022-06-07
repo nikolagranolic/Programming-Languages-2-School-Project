@@ -17,7 +17,7 @@ public class MoveDescriptionLabel extends JLabel implements Runnable {
 	}
 	@Override
 	public void run() {
-		while(Simulation.isGameActive()) {
+		while(true) {
 			synchronized(Simulation.lock) {
 				if(Simulation.activeCard instanceof BasicCard)
 					this.setText("Na potezu je " + Simulation.activePlayerName + ", figura " + Simulation.activeFigure.getFigureId() + ", prelazi " + Simulation.fieldsToMove + 
@@ -26,6 +26,11 @@ public class MoveDescriptionLabel extends JLabel implements Runnable {
 				else {
 					this.setText("Na potezu je " + Simulation.activePlayerName + ", kreira rupe.");
 				}
+			}
+			if(Simulation.isGameActive() == false) {
+				this.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+				this.setText("KRAJ IGRE");
+				break;
 			}
 			try {
 				Thread.sleep(400);
