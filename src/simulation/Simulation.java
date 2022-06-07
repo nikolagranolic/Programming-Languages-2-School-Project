@@ -49,7 +49,7 @@ public class Simulation {
 	public static void main(String args[]) {
 		// validacija unosa argumenata komandne linije
 		mainThread = Thread.currentThread();
-		mainThread.setPriority(10);
+		//mainThread.setPriority(10);
 		try {
 			timeReference = new Date().getTime();
 			
