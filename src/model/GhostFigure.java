@@ -1,12 +1,13 @@
 package model;
 
 import simulation.Simulation;
+import util.Hole;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GhostFigure extends Figure implements Runnable {
-	public boolean paused = false;
+	private boolean paused = false;
 	public static ArrayList<Integer> diamondsPositions = new ArrayList<>();
 	@Override
 	public void run() {
@@ -31,6 +32,10 @@ public class GhostFigure extends Figure implements Runnable {
 		}
 	}
 	
+	public void setPaused(boolean b) {
+		paused = b;
+	}
+	
 	private void addDiamonds() {
 		synchronized(Simulation.MAP) {
 			String[] coords;
@@ -53,7 +58,7 @@ public class GhostFigure extends Figure implements Runnable {
 				first = Integer.parseInt(coords[0]);
 				second = Integer.parseInt(coords[1]);
 				
-				if(!(Simulation.MAP[first][second] instanceof Figure) && !(Simulation.MAP[first][second] instanceof Diamond)) { // pitati moze li ovako!!!!!!!!!
+				if(!(Simulation.MAP[first][second] instanceof Figure) && !(Simulation.MAP[first][second] instanceof Diamond) && !(Simulation.MAP[first][second] instanceof Hole)) {
 					Simulation.MAP[first][second] = new Diamond();
 					diamondsPositions.add(Simulation.PATH.get(x));
 					total++;

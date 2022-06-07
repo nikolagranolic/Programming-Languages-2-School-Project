@@ -4,6 +4,7 @@ import enums.*;
 import simulation.Simulation;
 
 import java.util.ArrayList;
+import java.util.Date;
 	
 public abstract class PlayableFigure extends Figure {
 	protected String owner;
@@ -14,37 +15,37 @@ public abstract class PlayableFigure extends Figure {
 	protected int timeOfMovement = 0;
 	protected int pathLength = 0;
 	protected boolean reachedFinish;
-	protected boolean isLost;
+	protected boolean lost;
 	protected String[] lastPosition;
-	protected ArrayList<Integer> figurePath = new ArrayList<>();		
+	protected ArrayList<Integer> figurePath = new ArrayList<>();
+	protected long timeSpentMoving = 0;
 		
 	public PlayableFigure(String owner, Color color) {
 		this.owner = owner;
 		this.color = color;
 		this.reachedFinish = false;
 		this.positionOnPath = 0;
-		this.isLost = false;
+		this.lost = false;
 	}
 		
-	public boolean move(int n) { // pripaziti na sinhronizaciju!!! // popraviti!
-//		if(positionOnPath == -1) { // ako tek izlazim iz "kucice"
-//			positionOnPath = 0; 
-//			String[] coords = Simulation.coordinates(Simulation.PATH.get(positionOnPath)).split(","); 
-//			int first = Integer.parseInt(coords[0]), second = Integer.parseInt(coords[1]);
-//			while(Simulation.MAP[first][second] instanceof PlayableFigure) {
-//				positionOnPath++;
-//				coords = Simulation.coordinates(Simulation.PATH.get(positionOnPath)).split(",");
-//				first = Integer.parseInt(coords[0]); second = Integer.parseInt(coords[1]);
-//			}
-//			
-//		}
+	public boolean move(int n) {
+		long timeReference = new Date().getTime();
 		
-		
-		int fieldsToMove = (n + numOfCollectedDiamonds) * movementQuotient;
+		int fieldsToMove = n * movementQuotient + numOfCollectedDiamonds;
 		String[] coords;
 		int first, second;
 		
 		for(int i = 1; i <= fieldsToMove; i++) {
+			if(Simulation.gamePaused) {
+				synchronized(Simulation.mainThread) {
+					try {
+						Simulation.mainThread.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 			if(positionOnPath == Simulation.PATH.size())
 				break;
 			coords = Simulation.coordinates(Simulation.PATH.get(positionOnPath)).split(","); // koordinate u matrici sljedeceg polja
@@ -59,13 +60,10 @@ public abstract class PlayableFigure extends Figure {
 					i++;
 				}
 			
-			
-				
-			
-			
 				if(Simulation.MAP[first][second] instanceof Diamond) {
 					collectDiamond();
 				}
+				
 				Simulation.MAP[first][second] = this;
 				if(lastPosition != null) { // da uklonim sebe sa prethodnog polja // radi svaki put osim prvi put
 					first = Integer.parseInt(lastPosition[0]); second = Integer.parseInt(lastPosition[1]);
@@ -77,9 +75,6 @@ public abstract class PlayableFigure extends Figure {
 			positionOnPath++;
 			pathLength++;
 			
-			
-			
-			
 			lastPosition = coords;
 			
 			try {
@@ -89,6 +84,7 @@ public abstract class PlayableFigure extends Figure {
 				e.printStackTrace();
 			}
 		}
+		
 		if(positionOnPath  == (Simulation.mapDimension * Simulation.mapDimension + 1) / 2)  { // ako sam na zadnjem polju za figuru je kraj
 			coords = Simulation.coordinates(Simulation.PATH.get(positionOnPath - 1)).split(",");
 			first = Integer.parseInt(coords[0]); second = Integer.parseInt(coords[1]);
@@ -102,8 +98,11 @@ public abstract class PlayableFigure extends Figure {
 				e.printStackTrace();
 			}
 			reachedFinish = true;
+
+			timeSpentMoving += (new Date().getTime() - timeReference) / 1000;
 			return true;
 		}
+		timeSpentMoving += (new Date().getTime() - timeReference) / 1000;
 		return false;
 	}
 	
@@ -112,6 +111,10 @@ public abstract class PlayableFigure extends Figure {
 		for(int i = 0; i < pathLength; i++)
 			temp.add(Simulation.PATH.get(i));
 		return temp;
+	}
+	
+	public long getTimeSpentMoving() {
+		return timeSpentMoving;
 	}
 	
 	public Color getFigureColor() {
@@ -138,6 +141,13 @@ public abstract class PlayableFigure extends Figure {
 		return null;
 	}
 
+	public boolean isLost() {
+		return lost;
+	}
+	
+	public void drop() {
+		lost = true;
+	}
 	
 	protected void collectDiamond() {
 		this.numOfCollectedDiamonds++;

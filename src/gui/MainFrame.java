@@ -111,6 +111,30 @@ public class MainFrame extends JFrame {
 		getContentPane().add(panel, gbc_panel);
 		
 		pauseResumeButton = new JButton("Pokreni/Zaustavi");
+		pauseResumeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(Simulation.gamePaused == false) {
+					Simulation.ghostFigure.setPaused(true); // mozda ne?
+					Simulation.gamePaused = true;
+				}
+				else {
+					Simulation.ghostFigure.setPaused(false);
+					Simulation.gamePaused = false;
+	                try {
+	                	synchronized (Simulation.ghostFigure) {
+	                		Simulation.ghostFigure.notify();
+	                	}
+	                	synchronized (Simulation.mainThread) {
+	                		Simulation.mainThread.notify();
+	                	}
+	                }
+	                catch (Exception ex) {
+	                	ex.printStackTrace();
+	                }
+				}
+			}
+		});
 		pauseResumeButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
 		pauseResumeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		pauseResumeButton.setBounds(803, 51, 143, 72);

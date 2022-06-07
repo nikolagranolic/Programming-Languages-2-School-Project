@@ -16,9 +16,8 @@ public class GameDurationLabel extends JLabel implements Runnable {
 	}
 	@Override
 	public void run() {
-		while(true) {
-			if(Simulation.isGameActive())
-				this.setText("Vrijeme trajanja igre: " + ((new Date().getTime() - Simulation.timeReference) / 1000) + " s");
+		while(Simulation.isGameActive()) {
+			this.setText("Vrijeme trajanja igre: " + ((new Date().getTime() - Simulation.timeReference) / 1000) + " s");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

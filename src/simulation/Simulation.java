@@ -3,6 +3,7 @@ package simulation;
 import model.Player;
 import util.CardDeck;
 import model.GhostFigure;
+import model.PlayableFigure;
 import exceptions.*;
 import gui.MainFrame;
 
@@ -18,7 +19,7 @@ public class Simulation {
 	public final static int MAX_NUM_OF_PLAYERS = 4;
 	public final static int MIN_MAP_DIM = 7;
 	public final static int MAX_MAP_DIM = 10;
-	public final static int NUMBER_OF_HOLES_CREATED = 3;
+	public final static int NUMBER_OF_HOLES_CREATED = 5;
 	public static int numOfPlayers;
 	public static int mapDimension;
 	public static Object[][] MAP;
@@ -27,9 +28,12 @@ public class Simulation {
 	public static boolean gamePaused = false;
 	public static CardDeck DECK = new CardDeck();
 	public static long timeReference;
+	public static GhostFigure ghostFigure;
+	public static Thread mainThread;
 	
 	public static void main(String args[]) {
 		// validacija unosa argumenata komandne linije
+		mainThread = Thread.currentThread();
 		try {
 			timeReference = new Date().getTime();
 			
@@ -62,7 +66,7 @@ public class Simulation {
 			gameDurationThread.setDaemon(true);
 			gameDurationThread.start();
 			
-			GhostFigure ghostFigure = new GhostFigure();
+			ghostFigure = new GhostFigure();
 			Thread ghostFigureThread = new Thread(ghostFigure);
 			ghostFigureThread.setDaemon(true);
 			ghostFigureThread.start();
@@ -73,7 +77,11 @@ public class Simulation {
 			}
 			System.out.println("KRAJ IGREEEEE");
 			
-			
+			for(Player p : PLAYERS) {
+				for(PlayableFigure f : p.getFigures()) {
+					System.out.println(f.getTimeSpentMoving() + " s");
+				}
+			}
 			
 			
 			

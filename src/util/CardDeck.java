@@ -10,9 +10,9 @@ public class CardDeck {
 		for(int i = 0; i < 40; i++) {
 			cards.add(new BasicCard(i / 10 + 1));
 		}
-//		for(int i = 0; i < 12; i++) {
-//			cards.add(new SpecialCard());
-//		}
+		for(int i = 0; i < 12; i++) {
+			cards.add(new SpecialCard());
+		}
 		Collections.shuffle(cards);
 	}
 	

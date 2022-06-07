@@ -7,6 +7,7 @@ import simulation.Simulation;
 import util.BasicCard;
 import util.Card;
 import util.Hole;
+import util.SpecialCard;
 
 public class Player {
 	private static int PLAYER_ID = 1;
@@ -71,17 +72,36 @@ public class Player {
 		if(figuresRemaining > 0) {
 			Card drawnCard = Simulation.DECK.peek();
 			if(drawnCard instanceof BasicCard) {
+				if(figures.get(activeFigureIndex).isLost()) {
+					activeFigureIndex++;
+					figuresRemaining--;
+				}
 				boolean reachedEnd = figures.get(activeFigureIndex).move(((BasicCard)drawnCard).getNumber());
 				if(reachedEnd) {
 					activeFigureIndex++;
 					figuresRemaining--;
 				}
 			}
-			else {
+			else if(drawnCard instanceof SpecialCard){
 				Hole.createHoles();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Hole.deleteHoles();
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			}
-			Simulation.DECK.drawCard();
+			
+			synchronized(Simulation.DECK) {
+				Simulation.DECK.drawCard();
+			}
 		}
 	}
 	

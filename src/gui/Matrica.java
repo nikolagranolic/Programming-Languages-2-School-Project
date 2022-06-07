@@ -36,33 +36,42 @@ public class Matrica extends JPanel implements Runnable {
 	}
 	@Override
 	public void run() {
-		while(true) {
+		while(Simulation.isGameActive()) {
 			synchronized(Simulation.MAP) {
 				for(int i = 0; i < Simulation.mapDimension; i++) {
 					for(int j = 0; j < Simulation.mapDimension; j++) {
 						if(Simulation.MAP[i][j] instanceof Diamond) {
 							polja.get(i * Simulation.mapDimension + j).setIcon(new ImageIcon(MainFrame.class.getResource("/Images/diamond.png")));
 							polja.get(i * Simulation.mapDimension + j).setText("");
+							polja.get(i * Simulation.mapDimension + j).setBackground(Color.PINK);
+							polja.get(i * Simulation.mapDimension + j).setOpaque(false);
 						}
 						else if(Simulation.MAP[i][j] instanceof BasicFigure) {
 							polja.get(i * Simulation.mapDimension + j).setIcon(null);
 							Color color = ((BasicFigure) Simulation.MAP[i][j]).getColor();
 							polja.get(i * Simulation.mapDimension + j).setText("BF");
 							polja.get(i * Simulation.mapDimension + j).setForeground(color);
+							polja.get(i * Simulation.mapDimension + j).setBackground(Color.PINK);
+							polja.get(i * Simulation.mapDimension + j).setOpaque(false);
 						}
 						else if(Simulation.MAP[i][j] instanceof SuperFastFigure) {
 							polja.get(i * Simulation.mapDimension + j).setIcon(null);
 							Color color = ((SuperFastFigure) Simulation.MAP[i][j]).getColor();
 							polja.get(i * Simulation.mapDimension + j).setText("SFF");
 							polja.get(i * Simulation.mapDimension + j).setForeground(color);
+							polja.get(i * Simulation.mapDimension + j).setBackground(Color.PINK);
+							polja.get(i * Simulation.mapDimension + j).setOpaque(false);
 						}
 						else if(Simulation.MAP[i][j] instanceof FlyingFigure) {
 							polja.get(i * Simulation.mapDimension + j).setIcon(null);
 							Color color = ((FlyingFigure) Simulation.MAP[i][j]).getColor();
 							polja.get(i * Simulation.mapDimension + j).setText("FF");
 							polja.get(i * Simulation.mapDimension + j).setForeground(color);
+							polja.get(i * Simulation.mapDimension + j).setBackground(Color.PINK);
+							polja.get(i * Simulation.mapDimension + j).setOpaque(false);
 						}
 						else if(Simulation.MAP[i][j] instanceof Hole) {
+							polja.get(i * Simulation.mapDimension + j).setText("");
 							polja.get(i * Simulation.mapDimension + j).setIcon(null);
 							polja.get(i * Simulation.mapDimension + j).setBackground(Color.BLACK);
 							polja.get(i * Simulation.mapDimension + j).setOpaque(true);
@@ -71,6 +80,8 @@ public class Matrica extends JPanel implements Runnable {
 							polja.get(i * Simulation.mapDimension + j).setIcon(null);
 							polja.get(i * Simulation.mapDimension + j).setText((i * Simulation.mapDimension + j + 1) + "");
 							polja.get(i * Simulation.mapDimension + j).setForeground(Color.LIGHT_GRAY);
+							polja.get(i * Simulation.mapDimension + j).setBackground(Color.PINK);
+							polja.get(i * Simulation.mapDimension + j).setOpaque(false);
 						}
 					}
 				}
