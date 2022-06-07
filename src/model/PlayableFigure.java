@@ -42,7 +42,7 @@ public abstract class PlayableFigure extends Figure {
 			Simulation.activeFigureEndingPosition = positionOnPath + fieldsToMove - 1;
 			if(Simulation.activeFigureEndingPosition > Simulation.PATH.size() - 1) {
 				Simulation.activeFigureEndingPosition = Simulation.PATH.size() - 1;
-				Simulation.fieldsToMove = Simulation.activeFigureEndingPosition - Simulation.activeFigureStartingPosition;
+				Simulation.fieldsToMove = Simulation.activeFigureEndingPosition - Simulation.activeFigureStartingPosition + 1;
 			}
 			
 			

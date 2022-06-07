@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -33,54 +32,7 @@ public class MainFrame extends JFrame {
 	 */
 	public static ArrayList<Integer> putanja = new ArrayList<>();
 	public static ArrayList<JLabel> matrica = new ArrayList<>();
-	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					
-//					
-//					
-//			
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		});
-//		putanja.add(3);
-//		putanja.add(11);
-//		putanja.add(19);
-//		putanja.add(27);
-//		putanja.add(33);
-//		putanja.add(39);
-//		putanja.add(45);
-//		putanja.add(37);
-//		putanja.add(29);
-//		putanja.add(21);
-//		putanja.add(15);
-//		MainFrame frame = new MainFrame();
-//		
-//		frame.setVisible(true);
-//		
-//		frame.setResizable(false);
-//		frame.setTitle("DiamondCircle");
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		for(int i = 0; i < matrica.size(); i++) {
-//			if(putanja.contains(i)) {
-//				matrica.get(i).setText("x");
-//				matrica.get(i).setForeground(Color.BLACK);
-//			}
-////			if(i % 4 == 0) {
-////				matrica.get(i).setBackground(Color.BLACK);
-////				matrica.get(i).setOpaque(true);
-////			}
-//		}
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -151,7 +103,7 @@ public class MainFrame extends JFrame {
 		titleLabel.setBounds(359, 44, 252, 72);
 		panel.add(titleLabel);
 		
-		noOfGamesPlayedLabel = new JLabel("Trenutni broj odigranih igara: [n]");
+		noOfGamesPlayedLabel = new JLabel("Trenutni broj odigranih igara: " + Simulation.listOfFiles.size());
 		noOfGamesPlayedLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
 		noOfGamesPlayedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		noOfGamesPlayedLabel.setBounds(44, 33, 244, 54);
@@ -221,6 +173,12 @@ public class MainFrame extends JFrame {
 		panel_7.setLayout(null);
 		
 		displayFilesButton = new JButton("Fajlovi sa rezultatima");
+		displayFilesButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GameHistoryWindow gameHistoryTable = new GameHistoryWindow();
+			}
+		});
 		displayFilesButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		displayFilesButton.setBounds(43, 36, 164, 45);
 		panel_7.add(displayFilesButton);

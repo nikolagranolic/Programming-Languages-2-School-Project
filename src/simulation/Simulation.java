@@ -10,6 +10,8 @@ import gui.MainFrame;
 
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,9 +47,9 @@ public class Simulation {
 	public static int activeFigureEndingPosition;
 	public static String activePlayerName;
 	public static Object[] lock = new Object[1];
-	
+	public static ArrayList<File> listOfFiles;
 	public static void main(String args[]) {
-		// validacija unosa argumenata komandne linije
+		loadFiles();
 		mainThread = Thread.currentThread();
 		try {
 			timeReference = new Date().getTime();
@@ -210,6 +212,17 @@ public class Simulation {
 		playerList.toArray(PLAYERS);
 	}
 	
+	
+	private static void loadFiles() {
+		File folder = new File("./istorijaOdigranihIgara");
+		listOfFiles = new ArrayList<File>(Arrays.asList(folder.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File pathname) {
+				String name = pathname.getName().toLowerCase();
+				return name.endsWith(".txt") && pathname.isFile();
+			}
+		})));
+	}
 	// provjeravanje da li je igra i dalje traje
 	public static boolean isGameActive() {
 		for(Player player : PLAYERS) {
