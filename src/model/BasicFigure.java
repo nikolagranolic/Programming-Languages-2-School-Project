@@ -3,8 +3,8 @@ package model;
 import enums.Color;
 
 public class BasicFigure extends PlayableFigure {
-	public BasicFigure(String owner, Color color) {
-		super(owner, color);
+	public BasicFigure(String owner, Color color, int id) {
+		super(owner, color, id);
 		this.movementQuotient = 1;
 	}
 	

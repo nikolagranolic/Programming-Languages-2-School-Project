@@ -207,10 +207,13 @@ public class MainFrame extends JFrame {
 		splitPane_3.setLeftComponent(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		moveDescriptionLabel = new JLabel("OpisPoteza");
-		moveDescriptionLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
-		moveDescriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		moveDescriptionLabel = new MoveDescriptionLabel();
 		panel_6.add(moveDescriptionLabel, BorderLayout.CENTER);
+		
+		JLabel lblNewLabel = new JLabel("Opis poteza:");
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_6.add(lblNewLabel, BorderLayout.NORTH);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(189, 183, 107));
@@ -321,6 +324,9 @@ public class MainFrame extends JFrame {
 		return gameDurationLabel;
 	}
 	
+	public MoveDescriptionLabel getMoveDescriptionLabel() {
+		return moveDescriptionLabel;
+	}
 	// Variables declaration
 	// Figures labels
 	private ArrayList<JLabel> figuresLabels = new ArrayList<>();
@@ -331,7 +337,7 @@ public class MainFrame extends JFrame {
 	private GameDurationLabel gameDurationLabel;
 	private JLabel noOfGamesPlayedLabel;
 	private CurrentCardLabel currentCardLabel;
-	private JLabel moveDescriptionLabel;
+	private MoveDescriptionLabel moveDescriptionLabel;
 	// Panels
 	private JPanel figuresPanel;
 	private JPanel playersPanel;

@@ -14,24 +14,44 @@ public abstract class PlayableFigure extends Figure {
 	protected int numOfCollectedDiamonds = 0;
 	protected int timeOfMovement = 0;
 	protected int pathLength = 0;
+	protected int figureId;
 	protected boolean reachedFinish;
 	protected boolean lost;
 	protected String[] lastPosition;
 	protected ArrayList<Integer> figurePath = new ArrayList<>();
 	protected long timeSpentMoving = 0;
 		
-	public PlayableFigure(String owner, Color color) {
+	public PlayableFigure(String owner, Color color, int id) {
 		this.owner = owner;
 		this.color = color;
 		this.reachedFinish = false;
 		this.positionOnPath = 0;
 		this.lost = false;
+		this.figureId = id; 
 	}
 		
 	public boolean move(int n) {
 		long timeReference = new Date().getTime();
 		
 		int fieldsToMove = n * movementQuotient + numOfCollectedDiamonds;
+		// dio za opis poteza
+		
+		synchronized(Simulation.lock) {
+			Simulation.fieldsToMove = fieldsToMove;
+			Simulation.activeFigureStartingPosition = positionOnPath;
+			Simulation.activeFigureEndingPosition = positionOnPath + fieldsToMove - 1;
+			if(Simulation.activeFigureEndingPosition > Simulation.PATH.size() - 1) {
+				Simulation.activeFigureEndingPosition = Simulation.PATH.size() - 1;
+				Simulation.fieldsToMove = Simulation.activeFigureEndingPosition - Simulation.activeFigureStartingPosition;
+			}
+				
+			
+			if(!Simulation.moveDescriptionThread.isAlive())
+				Simulation.moveDescriptionThread.start();
+		}
+		
+		
+		
 		String[] coords;
 		int first, second;
 		
@@ -117,8 +137,16 @@ public abstract class PlayableFigure extends Figure {
 		return timeSpentMoving;
 	}
 	
+	public String getOwner() {
+		return owner;
+	}
+	
 	public Color getFigureColor() {
 		return color;
+	}
+	
+	public int getFigureId() {
+		return figureId;
 	}
 	
 	public int getPositionOnPath() {

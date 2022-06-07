@@ -23,7 +23,6 @@ public class GhostFigure extends Figure implements Runnable {
 				}
 			}
 			addDiamonds();
-			System.out.println("duh");
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) { // treba logovati izuzetak nesto

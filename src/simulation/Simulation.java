@@ -1,6 +1,7 @@
 package simulation;
 
 import model.Player;
+import util.Card;
 import util.CardDeck;
 import model.GhostFigure;
 import model.PlayableFigure;
@@ -12,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 public class Simulation {
 	public final static int MIN_NUM_OF_PLAYERS = 2;
@@ -29,7 +29,16 @@ public class Simulation {
 	public static CardDeck DECK = new CardDeck();
 	public static long timeReference;
 	public static GhostFigure ghostFigure;
+	public static Thread moveDescriptionThread;
 	public static Thread mainThread;
+	// za opis trenutnog poteza
+	public static PlayableFigure activeFigure;
+	public static Card activeCard;
+	public static int fieldsToMove;
+	public static int activeFigureStartingPosition;
+	public static int activeFigureEndingPosition;
+	public static String activePlayerName;
+	public static Object[] lock = new Object[1];
 	
 	public static void main(String args[]) {
 		// validacija unosa argumenata komandne linije
@@ -66,6 +75,10 @@ public class Simulation {
 			gameDurationThread.setDaemon(true);
 			gameDurationThread.start();
 			
+			moveDescriptionThread = new Thread(frame.getMoveDescriptionLabel());
+			moveDescriptionThread.setDaemon(true);
+			//moveDescriptionThread.start();
+			
 			ghostFigure = new GhostFigure();
 			Thread ghostFigureThread = new Thread(ghostFigure);
 			ghostFigureThread.setDaemon(true);
@@ -75,35 +88,14 @@ public class Simulation {
 				for(Player player : PLAYERS)
 					player.playAMove();
 			}
-			System.out.println("KRAJ IGREEEEE");
+//			System.out.println("KRAJ IGREEEEE");
 			
-			for(Player p : PLAYERS) {
-				for(PlayableFigure f : p.getFigures()) {
-					System.out.println(f.getTimeSpentMoving() + " s");
-				}
-			}
+//			for(Player p : PLAYERS) {
+//				for(PlayableFigure f : p.getFigures()) {
+//					System.out.println(f.getTimeSpentMoving() + " s");
+//				}
+//			}
 			
-			
-			
-//			Scanner scan = new Scanner(System.in);
-//	        String option = "";
-//	        while (!"END".equals(option)) {
-//	            option = scan.nextLine();
-//	            if ("PAUZA".equals(option)) {
-//	                ghostFigure.paused = true;
-//	            }
-//	            if ("NASTAVAK".equals(option)) {
-//	                ghostFigure.paused = false;
-//	                try {
-//	                    synchronized (ghostFigure) {
-//	                        ghostFigure.notify();
-//	                    }
-//	                } catch (Exception e) {
-//	                    e.printStackTrace();
-//	                }
-//	            }
-//	        }
-//	        scan.close();
 		}
 		catch(InvalidArgumentsException | InvalidNumberOfPlayersException | InvalidDimensionException e) {
 			System.out.println("Simulacija ne moze biti pokrenuta! Opis greske:");

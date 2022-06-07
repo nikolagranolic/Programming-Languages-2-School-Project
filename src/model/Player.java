@@ -32,13 +32,13 @@ public class Player {
 		for(int i = 0; i < 4; i++) {
 			x = random.nextInt(3);
 			if(x == 0) {
-				figures.add(new BasicFigure(name, figuresColor));
+				figures.add(new BasicFigure(name, figuresColor, i + 1));
 			}
 			else if(x == 1) {
-				figures.add(new FlyingFigure(name, figuresColor));
+				figures.add(new FlyingFigure(name, figuresColor, i + 1));
 			}
 			else if(x == 2) {
-				figures.add(new SuperFastFigure(name, figuresColor));
+				figures.add(new SuperFastFigure(name, figuresColor, i + 1));
 			}
 		}
 		activeFigureIndex = 0;
@@ -71,6 +71,12 @@ public class Player {
 	public void playAMove() {
 		if(figuresRemaining > 0) {
 			Card drawnCard = Simulation.DECK.peek();
+			synchronized(Simulation.lock) {
+				Simulation.activeFigure = figures.get(activeFigureIndex);
+				Simulation.activePlayerName = this.name;
+				Simulation.activeCard = Simulation.DECK.peek();
+			}
+			
 			if(drawnCard instanceof BasicCard) {
 				if(figures.get(activeFigureIndex).isLost()) {
 					activeFigureIndex++;
@@ -83,6 +89,8 @@ public class Player {
 				}
 			}
 			else if(drawnCard instanceof SpecialCard){
+				if(!Simulation.moveDescriptionThread.isAlive())
+					Simulation.moveDescriptionThread.start();
 				Hole.createHoles();
 				try {
 					Thread.sleep(1000);

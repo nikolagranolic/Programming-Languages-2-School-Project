@@ -6,8 +6,8 @@ import enums.Color;
 
 public class FlyingFigure extends PlayableFigure implements ImmuneToHolesInterface, FlyingInterface {
 	
-	public FlyingFigure(String owner, Color color) {
-		super(owner, color);
+	public FlyingFigure(String owner, Color color, int id) {
+		super(owner, color, id);
 		this.movementQuotient = 1;
 	}
 	
