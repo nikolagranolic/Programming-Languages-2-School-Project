@@ -239,8 +239,9 @@ public class Simulation {
 			LocalDateTime now = LocalDateTime.now();
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./istorijaOdigranihIgara/IGRA_" + dtf.format(now) + ".txt")));
 			
+			int j = 1;
 			for(Player p : PLAYERS) {
-				out.println("Igrac 1 - " + p.getName());
+				out.println("Igrac " + j++ + " - " + p.getName());
 				for(PlayableFigure f : p.getFigures()) {
 					out.print("    Figure" + f.getFigureId() + "(" + f.getType() + ", " + f.getColorString() + ")");
 					out.print(" - predjeni put (");

@@ -1,0 +1,11 @@
+Igrac 1 - Player1
+    Figure1(FlyingFigure, GREEN) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da)
+    Figure2(BasicFigure, GREEN) - predjeni put (4-12-20-28-34-40-46) - stigla do cilja (ne)
+    Figure3(SuperFastFigure, GREEN) - predjeni put (4-12-20-28-34-40-46-38) - stigla do cilja (ne)
+    Figure4(SuperFastFigure, GREEN) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da)
+Igrac 2 - Player2
+    Figure1(SuperFastFigure, RED) - predjeni put (4-12-20-28-34-40-46) - stigla do cilja (ne)
+    Figure2(FlyingFigure, RED) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da)
+    Figure3(FlyingFigure, RED) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da)
+    Figure4(BasicFigure, RED) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da)
+Ukupno vrijeme trajanja igre: 234 s

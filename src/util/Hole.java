@@ -18,7 +18,6 @@ public class Hole {
 		int x, first, second;
 		String[] coords;
 		synchronized(Simulation.MAP) {
-			
 			for(int i = 0; i < Simulation.NUMBER_OF_HOLES_CREATED;) {
 				x = rand.nextInt(Simulation.PATH.size());
 				coords = Simulation.coordinates(Simulation.PATH.get(x)).split(",");
