@@ -20,7 +20,7 @@ public class CurrentCardLabel extends JLabel implements Runnable {
 					this.setIcon(new ImageIcon(MainFrame.class.getResource("/Images/basicimage" + ((BasicCard)Simulation.DECK.peek()).getNumber() + ".png")));
 				}
 				try {
-					Thread.sleep(200);
+					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

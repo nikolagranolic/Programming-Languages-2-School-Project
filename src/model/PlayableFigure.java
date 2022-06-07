@@ -111,12 +111,12 @@ public abstract class PlayableFigure extends Figure {
 			synchronized(Simulation.MAP) {
 				Simulation.MAP[first][second] = "";
 			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			reachedFinish = true;
 
 			timeSpentMoving += (new Date().getTime() - timeReference) / 1000;

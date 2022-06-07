@@ -49,6 +49,7 @@ public class Simulation {
 	public static void main(String args[]) {
 		// validacija unosa argumenata komandne linije
 		mainThread = Thread.currentThread();
+		mainThread.setPriority(10);
 		try {
 			timeReference = new Date().getTime();
 			
@@ -90,8 +91,10 @@ public class Simulation {
 			ghostFigureThread.start();
 			
 			while(isGameActive()) {
-				for(Player player : PLAYERS)
-					player.playAMove();
+				for(Player player : PLAYERS) {
+					if(player.getFiguresRemaining() > 0)
+						player.playAMove();
+				}
 			}
 			gameDuration = (new Date().getTime() - timeReference) / 1000;
 			addResultsFile();
@@ -124,14 +127,14 @@ public class Simulation {
 //		return flag;
 //	}
 	// ispis mape
-	public static void printMap() {
-		for(int i = 0; i < mapDimension; i++) {
-			for(int j = 0; j < mapDimension; j++) {
-				System.out.printf("%4s", MAP[i][j]);
-			}
-			System.out.println();
-		}
-	}
+//	public static void printMap() {
+//		for(int i = 0; i < mapDimension; i++) {
+//			for(int j = 0; j < mapDimension; j++) {
+//				System.out.printf("%4s", MAP[i][j]);
+//			}
+//			System.out.println();
+//		}
+//	}
 	// smjestanje polja koja su na putanji u array-listu
 	// popraviti da se ne duplira kod
 	public static void createPath() {
