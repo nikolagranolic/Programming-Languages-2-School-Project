@@ -44,7 +44,7 @@ public abstract class PlayableFigure extends Figure {
 				Simulation.activeFigureEndingPosition = Simulation.PATH.size() - 1;
 				Simulation.fieldsToMove = Simulation.activeFigureEndingPosition - Simulation.activeFigureStartingPosition;
 			}
-				
+			
 			
 			if(!Simulation.moveDescriptionThread.isAlive())
 				Simulation.moveDescriptionThread.start();
@@ -126,6 +126,8 @@ public abstract class PlayableFigure extends Figure {
 		return false;
 	}
 	
+	public abstract String getType();
+	
 	public ArrayList<Integer> getFigurePath() {
 		ArrayList<Integer> temp = new ArrayList<>();
 		for(int i = 0; i < pathLength; i++)
@@ -139,6 +141,22 @@ public abstract class PlayableFigure extends Figure {
 	
 	public String getOwner() {
 		return owner;
+	}
+	
+	public boolean isReachedFinish() {
+		return reachedFinish;
+	}
+	
+	public String getColorString() {
+		if(this.getFigureColor() == enums.Color.BLUE)
+			return "BLUE";
+		else if(this.getFigureColor() == enums.Color.GREEN)
+			return "GREEN";
+		else if(this.getFigureColor() == enums.Color.YELLOW)
+			return "YELLOW";
+		else if(this.getFigureColor() == enums.Color.RED)
+			return "RED";
+		return "";
 	}
 	
 	public Color getFigureColor() {

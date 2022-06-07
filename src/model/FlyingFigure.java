@@ -15,4 +15,8 @@ public class FlyingFigure extends PlayableFigure implements ImmuneToHolesInterfa
 	public String toString() {
 		return "FF";
 	}
+	
+	public String getType() {
+		return "FlyingFigure";
+	}
 }

@@ -34,7 +34,8 @@ public class MoveDescriptionLabel extends JLabel implements Runnable {
 				e.printStackTrace();
 			}
 		}
-
+		this.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		this.setText("Igra je zavrsena! :D");
 	}
 
 }

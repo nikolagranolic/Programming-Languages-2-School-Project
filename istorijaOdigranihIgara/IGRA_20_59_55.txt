@@ -1,0 +1,11 @@
+Igrac 1 - Player1
+    Figure1(SuperFastFigure, YELLOW) - predjeni put (4-12-20-28-34-40-46-38-30-22) - stigla do cilja (ne) - vrijeme kretanja (3 s)
+    Figure2(BasicFigure, YELLOW) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (12 s)
+    Figure3(FlyingFigure, YELLOW) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (10 s)
+    Figure4(SuperFastFigure, YELLOW) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (11 s)
+Igrac 2 - Player2
+    Figure1(FlyingFigure, BLUE) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (10 s)
+    Figure2(FlyingFigure, BLUE) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (12 s)
+    Figure3(SuperFastFigure, BLUE) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (11 s)
+    Figure4(BasicFigure, BLUE) - predjeni put (4-12-20-28-34-40-46-38-30-22-16-10-11-19-27-33-39-31-23-17-18-26-32-24-25) - stigla do cilja (da) - vrijeme kretanja (11 s)
+Ukupno vrijeme trajanja igre: 146 s

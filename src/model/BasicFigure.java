@@ -12,4 +12,8 @@ public class BasicFigure extends PlayableFigure {
 	public String toString() {
 		return "BF";
 	}
+	
+	public String getType() {
+		return "BasicFigure";
+	}
 }

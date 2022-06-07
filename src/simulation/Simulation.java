@@ -8,6 +8,11 @@ import model.PlayableFigure;
 import exceptions.*;
 import gui.MainFrame;
 
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +33,7 @@ public class Simulation {
 	public static boolean gamePaused = false;
 	public static CardDeck DECK = new CardDeck();
 	public static long timeReference;
+	private static long gameDuration;
 	public static GhostFigure ghostFigure;
 	public static Thread moveDescriptionThread;
 	public static Thread mainThread;
@@ -88,14 +94,9 @@ public class Simulation {
 				for(Player player : PLAYERS)
 					player.playAMove();
 			}
-//			System.out.println("KRAJ IGREEEEE");
-			
-//			for(Player p : PLAYERS) {
-//				for(PlayableFigure f : p.getFigures()) {
-//					System.out.println(f.getTimeSpentMoving() + " s");
-//				}
-//			}
-			
+
+			gameDuration = (new Date().getTime() - timeReference) / 1000;
+			addResultsFile();
 		}
 		catch(InvalidArgumentsException | InvalidNumberOfPlayersException | InvalidDimensionException e) {
 			System.out.println("Simulacija ne moze biti pokrenuta! Opis greske:");
@@ -230,5 +231,33 @@ public class Simulation {
 		int first = (number - 1) / mapDimension;
 		int second = (number - 1) - first * mapDimension;
 		return first + "," + second;
+	}
+	
+	private static void addResultsFile() {
+		try {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH_mm_ss");
+			LocalDateTime now = LocalDateTime.now();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./istorijaOdigranihIgara/IGRA_" + dtf.format(now) + ".txt")));
+			
+			int j = 1;
+			for(Player p : PLAYERS) {
+				out.println("Igrac " + j++ + " - " + p.getName());
+				for(PlayableFigure f : p.getFigures()) {
+					out.print("    Figure" + f.getFigureId() + "(" + f.getType() + ", " + f.getColorString() + ")");
+					out.print(" - predjeni put (");
+					for(int i = 0; i < f.getFigurePath().size(); i++) {
+						out.print(f.getFigurePath().get(i));
+						if(i != f.getFigurePath().size() - 1)
+							out.print("-");
+					}
+					out.println(") - stigla do cilja (" + (f.isReachedFinish() ? "da" : "ne")  + ") - vrijeme kretanja (" + f.getTimeSpentMoving() + " s)");
+				}
+			}
+			out.println("Ukupno vrijeme trajanja igre: " + gameDuration + " s");
+			out.close();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }

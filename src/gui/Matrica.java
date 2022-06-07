@@ -23,7 +23,7 @@ public class Matrica extends JPanel implements Runnable {
 	private ArrayList<JLabel> polja = new ArrayList<>();
 	
 	public Matrica() {
-		this.setLayout(new GridLayout(Simulation.mapDimension, Simulation.mapDimension, 2, 2)); // !!!!!
+		this.setLayout(new GridLayout(Simulation.mapDimension, Simulation.mapDimension, 2, 2));
 		for(int i = 0; i < Simulation.mapDimension * Simulation.mapDimension; i++) {		
 			JLabel temp = new JLabel();
 			temp.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -88,7 +88,7 @@ public class Matrica extends JPanel implements Runnable {
 			}
 			
 			try {
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

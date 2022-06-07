@@ -19,14 +19,15 @@ public class CurrentCardLabel extends JLabel implements Runnable {
 				else if(Simulation.DECK.peek() instanceof BasicCard) {
 					this.setIcon(new ImageIcon(MainFrame.class.getResource("/Images/basicimage" + ((BasicCard)Simulation.DECK.peek()).getNumber() + ".png")));
 				}
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			}
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		this.setIcon(null);
 	}
 
 }
