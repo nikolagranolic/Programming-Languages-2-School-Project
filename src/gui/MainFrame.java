@@ -69,21 +69,26 @@ public class MainFrame extends JFrame {
 				if(Simulation.gamePaused == false) {
 					Simulation.ghostFigure.setPaused(true); // mozda ne?
 					Simulation.gamePaused = true;
+					GameDurationLabel.paused = true;
 				}
 				else {
 					Simulation.ghostFigure.setPaused(false);
 					Simulation.gamePaused = false;
-	                try {
+					GameDurationLabel.paused = false;
+	                //try {
 	                	synchronized (Simulation.ghostFigure) {
 	                		Simulation.ghostFigure.notify();
 	                	}
 	                	synchronized (Simulation.mainThread) {
 	                		Simulation.mainThread.notify();
 	                	}
-	                }
-	                catch (Exception ex) {
-	                	ex.printStackTrace();
-	                }
+	                	synchronized (Simulation.gameDurationLabel) {
+	                		Simulation.gameDurationLabel.notify();
+	                	}
+//	                }
+//	                catch (Exception ex) {
+//	                	ex.printStackTrace();
+//	                }
 				}
 			}
 		});
@@ -177,7 +182,7 @@ public class MainFrame extends JFrame {
 		displayFilesButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GameHistoryWindow gameHistoryTable = new GameHistoryWindow();
+				new GameHistoryWindow();
 			}
 		});
 		displayFilesButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));

@@ -9,15 +9,28 @@ import javax.swing.SwingConstants;
 import simulation.Simulation;
 
 public class GameDurationLabel extends JLabel implements Runnable {
-
+	public static boolean paused = false;
+	
 	public GameDurationLabel() {
 		this.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	@Override
 	public void run() {
+		long gameDuration = 0;
 		while(Simulation.isGameActive()) {
-			this.setText("Vrijeme trajanja igre: " + ((new Date().getTime() - Simulation.timeReference) / 1000) + " s");
+			
+			if(paused) {
+				synchronized (Simulation.gameDurationLabel) {
+					try {
+						wait();
+					}
+					catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			this.setText("Vrijeme trajanja igre: " + gameDuration++ + " s");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -27,5 +40,9 @@ public class GameDurationLabel extends JLabel implements Runnable {
 		}
 
 	}
-
+	
+	
+	public String getGameDuration() {
+		return this.getText().split(" ")[3];
+	}
 }

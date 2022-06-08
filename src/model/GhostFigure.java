@@ -13,7 +13,7 @@ public class GhostFigure extends Figure implements Runnable {
 	public void run() {
 		while(Simulation.isGameActive()) {
 			if(paused) {
-				synchronized (this) {
+				synchronized (Simulation.ghostFigure) {
 					try {
 						wait();
 					}

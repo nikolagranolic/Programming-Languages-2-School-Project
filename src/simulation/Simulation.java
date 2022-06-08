@@ -6,6 +6,7 @@ import util.CardDeck;
 import model.GhostFigure;
 import model.PlayableFigure;
 import exceptions.*;
+import gui.GameDurationLabel;
 import gui.MainFrame;
 
 import java.io.PrintWriter;
@@ -36,7 +37,10 @@ public class Simulation {
 	public static CardDeck DECK = new CardDeck();
 	public static long timeReference;
 	private static long gameDuration;
+	public static ArrayList<File> listOfFiles;
+	public static MainFrame frame;
 	public static GhostFigure ghostFigure;
+	public static GameDurationLabel gameDurationLabel;
 	public static Thread moveDescriptionThread;
 	public static Thread mainThread;
 	// za opis trenutnog poteza
@@ -47,7 +51,7 @@ public class Simulation {
 	public static int activeFigureEndingPosition;
 	public static String activePlayerName;
 	public static Object[] lock = new Object[1];
-	public static ArrayList<File> listOfFiles;
+	
 	public static void main(String args[]) {
 		loadFiles();
 		mainThread = Thread.currentThread();
@@ -67,7 +71,7 @@ public class Simulation {
 			
 			
 			
-			MainFrame frame = new MainFrame();
+			frame = new MainFrame();
 			frame.setVisible(true);
 			frame.initializeStaticLabels();
 			
@@ -79,13 +83,13 @@ public class Simulation {
 			cardThread.setDaemon(true);
 			cardThread.start();
 			
-			Thread gameDurationThread = new Thread(frame.getGameDurationLabel());
+			gameDurationLabel = frame.getGameDurationLabel();
+			Thread gameDurationThread = new Thread(gameDurationLabel);
 			gameDurationThread.setDaemon(true);
 			gameDurationThread.start();
 			
 			moveDescriptionThread = new Thread(frame.getMoveDescriptionLabel());
 			moveDescriptionThread.setDaemon(true);
-			//moveDescriptionThread.start();
 			
 			ghostFigure = new GhostFigure();
 			Thread ghostFigureThread = new Thread(ghostFigure);
@@ -266,7 +270,7 @@ public class Simulation {
 					out.println(") - stigla do cilja (" + (f.isReachedFinish() ? "da" : "ne")  + ") - vrijeme kretanja (" + f.getTimeSpentMoving() + " s)");
 				}
 			}
-			out.println("Ukupno vrijeme trajanja igre: " + gameDuration + " s");
+			out.println("Ukupno vrijeme trajanja igre: " + frame.getGameDurationLabel().getGameDuration() + " s");
 			out.close();
 		}
 		catch (Exception ex) {

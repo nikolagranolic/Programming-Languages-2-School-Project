@@ -21,8 +21,9 @@ public class MoveDescriptionLabel extends JLabel implements Runnable {
 			synchronized(Simulation.lock) {
 				if(Simulation.activeCard instanceof BasicCard)
 					this.setText("Na potezu je " + Simulation.activePlayerName + ", figura " + Simulation.activeFigure.getFigureId() + ", prelazi " + Simulation.fieldsToMove + 
-							 " polja, pomjera se sa pozicije " + Simulation.PATH.get(Simulation.activeFigureStartingPosition) + " na poziciju " + 
-							 Simulation.PATH.get(Simulation.activeFigureEndingPosition) + ".");
+							 " polja, pomjera se sa pozicije " + ((Simulation.PATH.get(Simulation.activeFigureStartingPosition) == 4) ?
+							 Simulation.PATH.get(Simulation.activeFigureStartingPosition) : Simulation.PATH.get(Simulation.activeFigureStartingPosition - 1)) +
+							 " na poziciju " + Simulation.PATH.get(Simulation.activeFigureEndingPosition) + ".");
 				else {
 					this.setText("Na potezu je " + Simulation.activePlayerName + ", kreira rupe.");
 				}

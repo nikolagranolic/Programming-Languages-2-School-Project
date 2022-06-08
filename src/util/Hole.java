@@ -14,6 +14,16 @@ public class Hole {
 	public static ArrayList<Integer> figuresIndices = new ArrayList<>();
 	
 	public static void createHoles() {
+		if(Simulation.gamePaused) {
+			synchronized(Simulation.mainThread) {
+				try {
+					Simulation.mainThread.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 		Random rand = new Random();
 		int x, first, second;
 		String[] coords;
