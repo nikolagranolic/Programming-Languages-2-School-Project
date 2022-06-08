@@ -21,6 +21,7 @@ import simulation.Simulation;
 
 import java.awt.Component;
 import java.awt.HeadlessException;
+import java.awt.Cursor;
 
 public class GameHistoryWindow extends JDialog {
 	private JTable table;
@@ -40,6 +41,7 @@ public class GameHistoryWindow extends JDialog {
 		}
 		
 		table = new JTable(rowData, colNames);
+		table.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		getContentPane().add(new JScrollPane(table));
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {

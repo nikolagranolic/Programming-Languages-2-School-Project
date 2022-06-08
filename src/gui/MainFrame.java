@@ -173,6 +173,7 @@ public class MainFrame extends JFrame {
 		panel_7.setLayout(null);
 		
 		displayFilesButton = new JButton("Fajlovi sa rezultatima");
+		displayFilesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		displayFilesButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
