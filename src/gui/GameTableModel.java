@@ -2,16 +2,19 @@ package gui;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
 
 public class GameTableModel extends AbstractTableModel {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<File> files;
 	
 	public GameTableModel(ArrayList<File> files) {
 		this.files = files;
 	}
+	
 	@Override
 	public int getRowCount() {
 		return files.size();
@@ -27,5 +30,4 @@ public class GameTableModel extends AbstractTableModel {
 		File file = files.get(rowIndex);
 		return file.getName();
 	}
-
 }

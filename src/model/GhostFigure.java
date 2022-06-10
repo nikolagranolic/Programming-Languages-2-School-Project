@@ -5,10 +5,13 @@ import util.Hole;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GhostFigure extends Figure implements Runnable {
 	private boolean paused = false;
 	public static ArrayList<Integer> diamondsPositions = new ArrayList<>();
+	
 	@Override
 	public void run() {
 		while(Simulation.isGameActive()) {
@@ -18,15 +21,17 @@ public class GhostFigure extends Figure implements Runnable {
 						wait();
 					}
 					catch (InterruptedException e) {
-						e.printStackTrace();
+						Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 					}
 				}
 			}
+			
 			addDiamonds();
+			
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) { // treba logovati izuzetak nesto
-				e.printStackTrace();
+				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 			}
 		}
 	}
@@ -46,11 +51,13 @@ public class GhostFigure extends Figure implements Runnable {
 					if(Simulation.MAP[first][second] instanceof Diamond)
 						Simulation.MAP[first][second] = "";
 				}
+				
 				diamondsPositions.clear();
 			}
 			int total = 0;
 			Random random = new Random();
 			int n = random.nextInt(Simulation.mapDimension - 1) + 2;
+			
 			while(total < n) {
 				int x = random.nextInt(Simulation.PATH.size());
 				coords = Simulation.coordinates(Simulation.PATH.get(x)).split(",");
@@ -62,7 +69,6 @@ public class GhostFigure extends Figure implements Runnable {
 					diamondsPositions.add(Simulation.PATH.get(x));
 					total++;
 				}
-				
 			}
 		}
 	}

@@ -1,11 +1,9 @@
 package model;
 
 import interfaces.FlyingInterface;
-import interfaces.ImmuneToHolesInterface;
 import enums.Color;
 
-public class FlyingFigure extends PlayableFigure implements ImmuneToHolesInterface, FlyingInterface {
-	
+public class FlyingFigure extends PlayableFigure implements FlyingInterface {
 	public FlyingFigure(String owner, Color color, int id) {
 		super(owner, color, id);
 		this.movementQuotient = 1;

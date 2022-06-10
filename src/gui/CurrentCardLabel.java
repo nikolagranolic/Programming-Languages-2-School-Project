@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -9,9 +12,13 @@ import util.SpecialCard;
 
 public class CurrentCardLabel extends JLabel implements Runnable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while(Simulation.isGameActive()) {
 			synchronized(Simulation.DECK) {
 				if(Simulation.DECK.peek() instanceof SpecialCard)
@@ -23,11 +30,9 @@ public class CurrentCardLabel extends JLabel implements Runnable {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 			}
 		}
 		this.setIcon(null);
 	}
-
 }

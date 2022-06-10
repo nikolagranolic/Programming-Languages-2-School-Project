@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import simulation.Simulation;
 import util.BasicCard;
 import util.Card;
@@ -29,6 +32,7 @@ public class Player {
 		figuresRemaining = 4;
 		int x = random.nextInt(availableColors.size());
 		figuresColor = availableColors.remove(x);
+		
 		for(int i = 0; i < 4; i++) {
 			x = random.nextInt(3);
 			if(x == 0) {
@@ -41,6 +45,7 @@ public class Player {
 				figures.add(new SuperFastFigure(name, figuresColor, i + 1));
 			}
 		}
+		
 		activeFigureIndex = 0;
 	}
 	
@@ -71,6 +76,7 @@ public class Player {
 	public void playAMove() {
 		if(figuresRemaining > 0) {
 			Card drawnCard = Simulation.DECK.peek();
+			
 			synchronized(Simulation.lock) {
 				Simulation.activeFigure = figures.get(activeFigureIndex);
 				Simulation.activePlayerName = this.name;
@@ -82,9 +88,12 @@ public class Player {
 					activeFigureIndex++;
 					figuresRemaining--;
 				}
+				
 				if(activeFigureIndex == 4)
 					return;
+				
 				boolean reachedEnd = figures.get(activeFigureIndex).move(((BasicCard)drawnCard).getNumber());
+				
 				if(reachedEnd) {
 					activeFigureIndex++;
 					figuresRemaining--;
@@ -93,20 +102,16 @@ public class Player {
 			else if(drawnCard instanceof SpecialCard){
 				if(!Simulation.moveDescriptionThread.isAlive())
 					Simulation.moveDescriptionThread.start();
+				
 				Hole.createHoles();
+				
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 				}
+				
 				Hole.deleteHoles();
-//				try {
-//					Thread.sleep(500);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 			}
 			
 			synchronized(Simulation.DECK) {

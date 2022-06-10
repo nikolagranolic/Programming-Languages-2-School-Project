@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,6 +20,10 @@ import simulation.Simulation;
 import util.Hole;
 
 public class Matrica extends JPanel implements Runnable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<JLabel> polja = new ArrayList<>();
 	
 	public Matrica() {
@@ -32,6 +38,7 @@ public class Matrica extends JPanel implements Runnable {
 			this.add(temp);
 		}
 	}
+	
 	@Override
 	public void run() {
 		while(Simulation.isGameActive()) {
@@ -80,10 +87,8 @@ public class Matrica extends JPanel implements Runnable {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 			}
-			
 		}
 	}
 }

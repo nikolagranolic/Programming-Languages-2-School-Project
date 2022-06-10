@@ -13,6 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.BoxLayout;
 import javax.swing.JSplitPane;
 import java.awt.Cursor;
@@ -26,17 +29,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 
 public class MainFrame extends JFrame {
-
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static ArrayList<Integer> putanja = new ArrayList<>();
-	public static ArrayList<JLabel> matrica = new ArrayList<>();
+	private static final long serialVersionUID = 1L;
 	
-
-	/**
-	 * Create the frame.
-	 */
 	public MainFrame() {
 		setTitle("DiamondCircle");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/Images/diamondicon.png")));
@@ -49,8 +46,6 @@ public class MainFrame extends JFrame {
 		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
-		
-		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(189, 183, 107));
@@ -75,8 +70,9 @@ public class MainFrame extends JFrame {
 					Simulation.ghostFigure.setPaused(false);
 					Simulation.gamePaused = false;
 					GameDurationLabel.paused = false;
-	                //try {
-	                	synchronized (Simulation.ghostFigure) {
+	                
+					try {
+						synchronized (Simulation.ghostFigure) {
 	                		Simulation.ghostFigure.notify();
 	                	}
 	                	synchronized (Simulation.mainThread) {
@@ -84,11 +80,11 @@ public class MainFrame extends JFrame {
 	                	}
 	                	synchronized (Simulation.gameDurationLabel) {
 	                		Simulation.gameDurationLabel.notify();
-	                	}
-//	                }
-//	                catch (Exception ex) {
-//	                	ex.printStackTrace();
-//	                }
+	                	}	
+					}
+					catch (Exception ex) {
+						Logger.getLogger(Simulation.class.getName()).log(Level.INFO, ex.fillInStackTrace().toString());
+					}
 				}
 			}
 		});
@@ -137,8 +133,6 @@ public class MainFrame extends JFrame {
 		splitPane.setLeftComponent(playersPanel);
 		playersPanel.setLayout(new GridLayout(1, Simulation.numOfPlayers, 0, 0)); // staviti tu num of players umjesto 4
 		
-		
-		
 		JSplitPane splitPane_1 = new JSplitPane();
 		splitPane_1.setDividerSize(0);
 		splitPane_1.setDoubleBuffered(true);
@@ -148,7 +142,6 @@ public class MainFrame extends JFrame {
 		figuresPanel.setBackground(new Color(189, 183, 107));
 		splitPane_1.setLeftComponent(figuresPanel);
 		figuresPanel.setLayout(new GridLayout(16, 1, 0, 0));
-		
 		
 		JSplitPane splitPane_2 = new JSplitPane();
 		splitPane_2.setDividerSize(0);
@@ -203,10 +196,6 @@ public class MainFrame extends JFrame {
 		matrixPanel.setBounds(119, 29, 368, 285);
 		panel_4.add(matrixPanel);
 		
-		
-		
-		
-		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(189, 183, 107));
 		splitPane_4.setRightComponent(panel_5);
@@ -228,14 +217,12 @@ public class MainFrame extends JFrame {
 		currentCardLabel.setBounds(10, 47, 213, 267);
 		panel_8.add(currentCardLabel);
 		
-		
 		splitPane_4.setDividerLocation(600);
 		splitPane_2.setDividerLocation(350);
 		splitPane_1.setDividerLocation(150);
-		splitPane.setDividerLocation(50);
-		
-		
+		splitPane.setDividerLocation(50);		
 	}
+	
 	public void initializeStaticLabels() {
 		for(int i = 0; i < Simulation.numOfPlayers * 4; i++) { // dodavanje labela za figure
 			Player player = Simulation.PLAYERS[i / 4];
@@ -247,8 +234,6 @@ public class MainFrame extends JFrame {
 			temp.setHorizontalAlignment(SwingConstants.CENTER);
 			figuresPanel.add(temp);
 			figuresLabels.add(temp);
-			
-			
 		}
 		
 		for(int i = 0; i < figuresLabels.size(); i++) { // dodavanje njihovih event listenera

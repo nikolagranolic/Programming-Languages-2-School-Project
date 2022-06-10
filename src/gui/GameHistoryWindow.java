@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -15,15 +16,17 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import simulation.Simulation;
 
-import java.awt.Component;
 import java.awt.HeadlessException;
 import java.awt.Cursor;
 
 public class GameHistoryWindow extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	public GameHistoryWindow() {
 		setResizable(false);
@@ -51,11 +54,9 @@ public class GameHistoryWindow extends JDialog {
 				try {
 					JOptionPane.showMessageDialog(null, Files.readString(Path.of("./istorijaOdigranihIgara/" + table.getValueAt(row, column))));
 				} catch (HeadlessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 				}
 			}
 		});

@@ -16,6 +16,10 @@ import java.awt.Toolkit;
 public class FigurePath extends JDialog {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Launch the application.
 	 */
 	public ArrayList<JLabel> matrix = new ArrayList<>();
@@ -30,6 +34,7 @@ public class FigurePath extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 500, 500);
 		getContentPane().setLayout(new GridLayout(Simulation.mapDimension, Simulation.mapDimension, 0, 0));
+		
 		for(int i = 0; i < Simulation.mapDimension * Simulation.mapDimension; i++) { // dodavanje
 			JLabel temp = new JLabel("" + (i + 1));
 			temp.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -39,6 +44,7 @@ public class FigurePath extends JDialog {
 			getContentPane().add(temp);
 			matrix.add(temp);
 		}
+		
 		this.setTitle(figureName);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
@@ -51,5 +57,4 @@ public class FigurePath extends JDialog {
 		
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 	}
-
 }

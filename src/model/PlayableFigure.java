@@ -2,9 +2,10 @@ package model;
 
 import enums.*;
 import simulation.Simulation;
-
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 	
 public abstract class PlayableFigure extends Figure {
 	protected String owner;
@@ -34,17 +35,17 @@ public abstract class PlayableFigure extends Figure {
 		long timeReference = new Date().getTime();
 		
 		int fieldsToMove = n * movementQuotient + numOfCollectedDiamonds;
-		// dio za opis poteza
 		
+		// dio za opis poteza
 		synchronized(Simulation.lock) {
 			Simulation.fieldsToMove = fieldsToMove;
 			Simulation.activeFigureStartingPosition = positionOnPath;
 			Simulation.activeFigureEndingPosition = positionOnPath + fieldsToMove - 1;
+			
 			if(Simulation.activeFigureEndingPosition > Simulation.PATH.size() - 1) {
 				Simulation.activeFigureEndingPosition = Simulation.PATH.size() - 1;
 				Simulation.fieldsToMove = Simulation.activeFigureEndingPosition - Simulation.activeFigureStartingPosition + 1;
 			}
-			
 			
 			if(!Simulation.moveDescriptionThread.isAlive())
 				Simulation.moveDescriptionThread.start();
@@ -61,11 +62,11 @@ public abstract class PlayableFigure extends Figure {
 					try {
 						Simulation.mainThread.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 					}
 				}
 			}
+			
 			if(positionOnPath == Simulation.PATH.size())
 				break;
 			coords = Simulation.coordinates(Simulation.PATH.get(positionOnPath)).split(","); // koordinate u matrici sljedeceg polja
@@ -85,40 +86,39 @@ public abstract class PlayableFigure extends Figure {
 				}
 				
 				Simulation.MAP[first][second] = this;
+				
 				if(lastPosition != null) { // da uklonim sebe sa prethodnog polja // radi svaki put osim prvi put
 					first = Integer.parseInt(lastPosition[0]); second = Integer.parseInt(lastPosition[1]);
 					Simulation.MAP[first][second] = "";
 				}
 			}
 			
-			
 			positionOnPath++;
 			pathLength++;
-			
 			lastPosition = coords;
 			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 			}
 		}
 		
 		if(positionOnPath  == (Simulation.mapDimension * Simulation.mapDimension + 1) / 2)  { // ako sam na zadnjem polju za figuru je kraj
 			coords = Simulation.coordinates(Simulation.PATH.get(positionOnPath - 1)).split(",");
 			first = Integer.parseInt(coords[0]); second = Integer.parseInt(coords[1]);
+			
 			synchronized(Simulation.MAP) {
 				Simulation.MAP[first][second] = "";
 			}
+			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 			}
+			
 			reachedFinish = true;
-
 			timeSpentMoving += (new Date().getTime() - timeReference) / 1000;
 			return true;
 		}

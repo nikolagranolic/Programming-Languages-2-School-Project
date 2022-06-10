@@ -14,15 +14,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Simulation {
+	public static Handler handler;
 	public final static int MIN_NUM_OF_PLAYERS = 2;
 	public final static int MAX_NUM_OF_PLAYERS = 4;
 	public final static int MIN_MAP_DIM = 7;
@@ -36,7 +38,6 @@ public class Simulation {
 	public static boolean gamePaused = false;
 	public static CardDeck DECK = new CardDeck();
 	public static long timeReference;
-	private static long gameDuration;
 	public static ArrayList<File> listOfFiles;
 	public static MainFrame frame;
 	public static GhostFigure ghostFigure;
@@ -52,6 +53,16 @@ public class Simulation {
 	public static String activePlayerName;
 	public static Object[] lock = new Object[1];
 	
+	{
+		try {
+			handler = new FileHandler("simulation.log");
+			Logger.getLogger(Simulation.class.getName()).addHandler(handler);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String args[]) {
 		loadFiles();
 		mainThread = Thread.currentThread();
@@ -65,11 +76,6 @@ public class Simulation {
 			createMatrix();
 			createPath();
 			createPlayers();
-			
-			
-			
-			
-			
 			
 			frame = new MainFrame();
 			frame.setVisible(true);
@@ -101,47 +107,14 @@ public class Simulation {
 					player.playAMove();
 			}
 
-			gameDuration = (new Date().getTime() - timeReference) / 1000;
 			addResultsFile();
 		}
 		catch(InvalidArgumentsException | InvalidNumberOfPlayersException | InvalidDimensionException e) {
-			System.out.println("Simulacija ne moze biti pokrenuta! Opis greske:");
-			System.out.println(e.getMessage());
+			Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
 		}	
 	}
-	public static void game() {
-		boolean gameEnded = false;
-		while (!gameEnded) {
-			gameEnded = checkIfGameEnded(gameEnded);
-			for(int i = 0; i < numOfPlayers; i++) {
-				if(PLAYERS[i].isInGame()) {
-					PLAYERS[i].playAMove();
-				}
-				while(gamePaused) {
-					
-				}
-			}
-		}
-	}
-	private static boolean checkIfGameEnded(boolean flag) {
-		flag = false;
-		for(Player p : PLAYERS) {
-			if(p.isInGame())
-				flag = true;
-		}
-		return flag;
-	}
-	// ispis mape
-	public static void printMap() {
-		for(int i = 0; i < mapDimension; i++) {
-			for(int j = 0; j < mapDimension; j++) {
-				System.out.printf("%4s", MAP[i][j]);
-			}
-			System.out.println();
-		}
-	}
+
 	// smjestanje polja koja su na putanji u array-listu
-	// popraviti da se ne duplira kod
 	public static void createPath() {
 		if(mapDimension % 2 == 1) {
 			for(int t = 0; t < (mapDimension + 1) / 2; t++) {
@@ -197,7 +170,7 @@ public class Simulation {
 		if(args.length != 2) {
 			throw new InvalidArgumentsException();
 		}
-		if(Integer.parseInt(args[0]) < MIN_NUM_OF_PLAYERS || Integer.parseInt(args[0]) > MAX_NUM_OF_PLAYERS) { // OBRISATI -1
+		if(Integer.parseInt(args[0]) < MIN_NUM_OF_PLAYERS || Integer.parseInt(args[0]) > MAX_NUM_OF_PLAYERS) {
 			throw new InvalidNumberOfPlayersException();
 		}
 		if(Integer.parseInt(args[1]) < MIN_MAP_DIM || Integer.parseInt(args[1]) > MAX_MAP_DIM) {
@@ -274,7 +247,7 @@ public class Simulation {
 			out.close();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			Logger.getLogger(Simulation.class.getName()).log(Level.INFO, ex.fillInStackTrace().toString());
 		}
 	}
 }

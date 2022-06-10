@@ -6,10 +6,6 @@ public class Diamond {
 	public static int MIN_NUM_OF_DIAMONDS = 2;
 	public static int MAX_NUM_OF_DIAMONDS = Simulation.mapDimension;
 	
-	public Diamond() {
-	
-	}
-	
 	@Override
 	public String toString() {
 		return "<<>>";

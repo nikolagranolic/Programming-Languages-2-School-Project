@@ -1,9 +1,8 @@
 package model;
 
 import enums.Color;
-import interfaces.SuperFastInterface;
 
-public class SuperFastFigure extends PlayableFigure implements SuperFastInterface {
+public class SuperFastFigure extends PlayableFigure {
 	public SuperFastFigure(String owner, Color color, int id) {
 		super(owner, color, id);
 		this.movementQuotient = 2;
