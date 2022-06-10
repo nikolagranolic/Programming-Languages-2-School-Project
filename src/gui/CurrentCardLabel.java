@@ -1,8 +1,5 @@
 package gui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -30,7 +27,7 @@ public class CurrentCardLabel extends JLabel implements Runnable {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+				Simulation.logger.info(e.fillInStackTrace().toString());	
 			}
 		}
 		this.setIcon(null);

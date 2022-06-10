@@ -54,9 +54,9 @@ public class GameHistoryWindow extends JDialog {
 				try {
 					JOptionPane.showMessageDialog(null, Files.readString(Path.of("./istorijaOdigranihIgara/" + table.getValueAt(row, column))));
 				} catch (HeadlessException e) {
-					Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+					Simulation.logger.info(e.fillInStackTrace().toString());	
 				} catch (IOException e) {
-					Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+					Simulation.logger.info(e.fillInStackTrace().toString());	
 				}
 			}
 		});

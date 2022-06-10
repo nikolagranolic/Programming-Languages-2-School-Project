@@ -22,9 +22,11 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Simulation {
 	public static Handler handler;
+	public static Logger logger;
 	public final static int MIN_NUM_OF_PLAYERS = 2;
 	public final static int MAX_NUM_OF_PLAYERS = 4;
 	public final static int MIN_MAP_DIM = 7;
@@ -53,17 +55,19 @@ public class Simulation {
 	public static String activePlayerName;
 	public static Object[] lock = new Object[1];
 	
-	{
+	public static void main(String args[]) {
 		try {
-			handler = new FileHandler("simulation.log");
-			Logger.getLogger(Simulation.class.getName()).addHandler(handler);
+			logger = Logger.getLogger("Simulation.class.getName()");
+			handler = new FileHandler("simulation.log", true);
+			logger.addHandler(handler);
+			
+			SimpleFormatter formatter = new SimpleFormatter();	
+			handler.setFormatter(formatter);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String args[]) {
+		
 		loadFiles();
 		mainThread = Thread.currentThread();
 		try {
@@ -110,7 +114,7 @@ public class Simulation {
 			addResultsFile();
 		}
 		catch(InvalidArgumentsException | InvalidNumberOfPlayersException | InvalidDimensionException e) {
-			Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+			logger.info(e.fillInStackTrace().toString());
 		}	
 	}
 
@@ -247,7 +251,7 @@ public class Simulation {
 			out.close();
 		}
 		catch (Exception ex) {
-			Logger.getLogger(Simulation.class.getName()).log(Level.INFO, ex.fillInStackTrace().toString());
+			logger.info(ex.fillInStackTrace().toString());
 		}
 	}
 }

@@ -108,7 +108,7 @@ public class Player {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+					Simulation.logger.info(e.fillInStackTrace().toString());	
 				}
 				
 				Hole.deleteHoles();

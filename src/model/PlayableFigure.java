@@ -62,7 +62,7 @@ public abstract class PlayableFigure extends Figure {
 					try {
 						Simulation.mainThread.wait();
 					} catch (InterruptedException e) {
-						Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+						Simulation.logger.info(e.fillInStackTrace().toString());	
 					}
 				}
 			}
@@ -100,7 +100,7 @@ public abstract class PlayableFigure extends Figure {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+				Simulation.logger.info(e.fillInStackTrace().toString());	
 			}
 		}
 		
@@ -115,7 +115,7 @@ public abstract class PlayableFigure extends Figure {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+				Simulation.logger.info(e.fillInStackTrace().toString());	
 			}
 			
 			reachedFinish = true;

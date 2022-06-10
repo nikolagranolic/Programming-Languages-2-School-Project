@@ -87,7 +87,7 @@ public class Matrica extends JPanel implements Runnable {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+				Simulation.logger.info(e.fillInStackTrace().toString());	
 			}
 		}
 	}

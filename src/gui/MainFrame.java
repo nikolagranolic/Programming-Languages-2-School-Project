@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
 	                	}	
 					}
 					catch (Exception ex) {
-						Logger.getLogger(Simulation.class.getName()).log(Level.INFO, ex.fillInStackTrace().toString());
+						Simulation.logger.info(ex.fillInStackTrace().toString());	
 					}
 				}
 			}

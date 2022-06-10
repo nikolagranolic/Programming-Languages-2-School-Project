@@ -1,0 +1,12 @@
+Jun 11, 2022 1:39:12 AM simulation.Simulation main
+INFO: exceptions.InvalidNumberOfPlayersException: Zadani broj igraca nije u postavljenim granicama!
+Jun 11, 2022 1:47:28 AM simulation.Simulation main
+INFO: exceptions.InvalidArgumentsException: Argumenti komandne linije nisu ispravno uneseni! Pokusajte ponovo u formatu '[broj_igraca] [dimenzija_matrice].
+Jun 11, 2022 1:47:34 AM simulation.Simulation main
+INFO: exceptions.InvalidArgumentsException: Argumenti komandne linije nisu ispravno uneseni! Pokusajte ponovo u formatu '[broj_igraca] [dimenzija_matrice].
+Jun 11, 2022 1:47:45 AM simulation.Simulation main
+INFO: exceptions.InvalidDimensionException: Zadane dimenzije nisu u postavljenim granicama!
+Jun 11, 2022 1:47:55 AM simulation.Simulation main
+INFO: exceptions.InvalidNumberOfPlayersException: Zadani broj igraca nije u postavljenim granicama!
+Jun 11, 2022 1:48:03 AM simulation.Simulation main
+INFO: exceptions.InvalidNumberOfPlayersException: Zadani broj igraca nije u postavljenim granicama!

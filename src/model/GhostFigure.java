@@ -21,7 +21,7 @@ public class GhostFigure extends Figure implements Runnable {
 						wait();
 					}
 					catch (InterruptedException e) {
-						Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+						Simulation.logger.info(e.fillInStackTrace().toString());	
 					}
 				}
 			}
@@ -31,7 +31,7 @@ public class GhostFigure extends Figure implements Runnable {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) { // treba logovati izuzetak nesto
-				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+				Simulation.logger.info(e.fillInStackTrace().toString());	
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class MoveDescriptionLabel extends JLabel implements Runnable {
 			try {
 				Thread.sleep(400);
 			} catch (InterruptedException e) {
-				Logger.getLogger(Simulation.class.getName()).log(Level.INFO, e.fillInStackTrace().toString());
+				Simulation.logger.info(e.fillInStackTrace().toString());	
 			}
 		}
 		this.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
